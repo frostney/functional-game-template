@@ -1,4 +1,4 @@
-import icescraper, { Assets } from "./icescraper";
+import icescraper, { Assets } from "engine";
 
 import * as Hero from "./Hero";
 

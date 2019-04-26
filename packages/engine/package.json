@@ -1,0 +1,9 @@
+{
+  "name": "engine",
+  "main": "src/index.js",
+  "license": "MIT",
+  "version": "1.0.0",
+  "dependencies": {
+    "shortid": "2.2.14"
+  }
+}
