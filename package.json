@@ -2,7 +2,21 @@
   "name": "functional-game-engine-template",
   "version": "1.0.0",
   "description": "",
+  "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "lerna run start --scope=game",
+    "build": "lerna run build --scope=game",
+    "deploy": "lerna run deploy --scope=game",
+    "lint": "eslint .",
+    "format": "prettier-eslint --write \"**/*.js\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint && yarn build && yarn deploy"
+    }
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -10,10 +24,19 @@
     "@babel/core": "7.2.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
     "@babel/preset-env": "^7.4.3",
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
-    "eslint-plugin-import": "^2.17.2",
     "eslint-config-airbnb-base": "^13.1.0",
-    "lint-staged": "^8.1.5"
+    "eslint-plugin-import": "^2.17.2",
+    "husky": "^2.1.0",
+    "lerna": "^3.13.4",
+    "lint-staged": "^8.1.5",
+    "prettier-eslint-cli": "^4.7.1"
   },
-  "keywords": []
+  "keywords": [],
+  "lint-staged": {
+    "*.js": [
+      "prettier-eslint --write"
+    ]
+  }
 }

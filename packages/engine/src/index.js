@@ -1,9 +1,11 @@
-import * as CanvasProvider from "./CanvasProvider";
-import shortid from "shortid";
-export * as Assets from "./Assets";
+import shortid from 'shortid';
 
-let gameObjectMap = {};
-let globalState = {};
+import * as CanvasProvider from './CanvasProvider';
+
+export * as Assets from './Assets';
+
+const gameObjectMap = {};
+const globalState = {};
 
 const defaultGameObjectState = {
   x: 0,
@@ -11,7 +13,7 @@ const defaultGameObjectState = {
   z: 0,
   pivotX: 0,
   pivotY: 0,
-  angle: 0
+  angle: 0,
 };
 
 class GameObjectList {
@@ -31,25 +33,25 @@ const populateGlobalStateByBranch = (branchName, gameObjects) => {
     const initialState = gameObject.initialState || {};
     globalState[gameObjectMap[branchName][index]] = {
       ...defaultGameObjectState,
-      ...initialState
+      ...initialState,
     };
   });
 };
-const populateGlobalState = gameObjects => {
-  populateGlobalStateByBranch("root", gameObjects);
+const populateGlobalState = (gameObjects) => {
+  populateGlobalStateByBranch('root', gameObjects);
 };
 
-const countChildren = gameObjects => {
-  gameObjects.forEach(gameObject => {
-    if (Array.isArray(gameObject.children) && gameObject.children.length > 0) {
-    }
+const countChildren = (gameObjects) => {
+  gameObjects.forEach((gameObject) => {
+    // if (Array.isArray(gameObject.children) && gameObject.children.length > 0) {
+    // }
   });
 };
 
 const dispatch = () => {};
 dispatch.toChildren = () => {};
 
-export default function(width, height, gameObjects) {
+export default function (width, height, gameObjects) {
   CanvasProvider.createContext(width, height);
 
   populateGlobalState(gameObjects);

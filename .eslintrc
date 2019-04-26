@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb-base",
+  "parser": "babel-eslint",
+  "globals": {
+    "document": true,
+    "Image": true
+  },
+  "rules": {
+    "class-methods-use-this": "off",
+    "no-unused-vars": "warn"
+  }
+}
