@@ -4,6 +4,9 @@
   "license": "MIT",
   "version": "1.0.0",
   "dependencies": {
+    "animframe": "^2.0.0",
+    "eventmap": "^2.1.0",
+    "resize-observer-polyfill": "^1.5.1",
     "shortid": "2.2.14"
   }
 }

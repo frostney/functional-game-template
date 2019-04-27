@@ -2,6 +2,8 @@ import icescraper, { Assets } from 'engine';
 
 import * as Hero from './Hero';
 
+import './styles.css';
+
 Assets.queue(Hero.preload())
   .then((res) => {
     icescraper(800, 600, [Hero]);

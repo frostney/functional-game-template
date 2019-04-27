@@ -3,7 +3,8 @@
   "parser": "babel-eslint",
   "globals": {
     "document": true,
-    "Image": true
+    "Image": true,
+    "window": true
   },
   "rules": {
     "class-methods-use-this": "off",

@@ -5,9 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "lerna run start --scope=game",
-    "build": "lerna run build --scope=game",
-    "deploy": "lerna run deploy --scope=game",
+    "start": "lerna run start --scope=game --stream --no-prefix",
+    "build": "lerna run build --scope=game --stream --no-prefix",
+    "deploy": "lerna run deploy --scope=game --stream --no-prefix",
     "lint": "eslint .",
     "format": "prettier-eslint --write \"**/*.js\""
   },

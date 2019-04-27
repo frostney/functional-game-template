@@ -53,6 +53,14 @@ dispatch.toChildren = () => {};
 
 export default function (width, height, gameObjects) {
   CanvasProvider.createContext(width, height);
+  CanvasProvider.drawRect({
+    x: 0,
+    y: 0,
+    w: width,
+    h: height,
+  })({
+    color: '#fff',
+  });
 
   populateGlobalState(gameObjects);
 
