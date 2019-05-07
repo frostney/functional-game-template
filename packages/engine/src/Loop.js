@@ -1,99 +1,71 @@
 import { requestAnimationFrame, performance } from 'animframe';
-import EventMap from 'eventmap';
 
-const loopEvents = new EventMap();
+let loopEvents = {};
 let pausedEvents = {};
 const timers = [];
 
-const Loop = (function () {
-  let isRunning = true;
+let isRunning = true;
 
-  /**
-   * @method run
-   */
-  const run = function () {
-    let time;
+export const run = () => {
+  let time;
 
-    (function loop() {
-      /* eslint no-plusplus: 0 */
-      /* eslint no-loop-func: 0 */
+  (function loop() {
+    requestAnimationFrame.call(window, loop);
 
-      requestAnimationFrame.call(window, loop);
+    const now = performance.now();
+    const dt = now - (time || now);
 
-      const now = performance.now();
-      const dt = now - (time || now);
+    time = now;
 
-      time = now;
-
-      if (!isRunning) {
-        return;
-      }
-
-      timers.forEach((timer) => {
-        timer.tick(now);
-      });
-
-      const eventKeys = Object.keys(loopEvents.events.listeners);
-
-      for (let i = 0, j = eventKeys.length; i < j; i++) {
-        (function (key) {
-          if (!pausedEvents[key]) {
-            loopEvents.trigger(key, dt);
-          }
-        }(eventKeys[i]));
-      }
-    }());
-  };
-
-  /**
-   * @method stop
-   */
-  const stop = function () {
-    isRunning = false;
-  };
-
-  const clear = function () {
-    loopEvents.clear();
-    pausedEvents = {};
-  };
-
-  const on = function (taskName, taskFunction) {
-    loopEvents.on(taskName, taskFunction);
-    pausedEvents[taskName] = false;
-  };
-
-  const off = function (taskName) {
-    loopEvents.off(taskName);
-    if (pausedEvents[taskName] != null) {
-      delete pausedEvents[taskName];
-    }
-  };
-
-  const pause = function (taskName) {
-    pausedEvents[taskName] = true;
-  };
-
-  const resume = function (taskName) {
-    if (taskName == null) {
-      isRunning = true;
+    if (!isRunning) {
       return;
     }
 
-    pausedEvents[taskName] = false;
-  };
+    timers.forEach((timer) => {
+      timer.tick(now);
+    });
 
-  return {
-    run,
+    Object.keys(loopEvents).forEach((eventName) => {
+      if (!pausedEvents[eventName]) {
+        loopEvents[eventName](dt);
+      }
+    });
+  }());
+};
 
-    stop,
-    clear,
+/**
+ * @method stop
+ */
+export const stop = () => {
+  isRunning = false;
+};
 
-    on,
-    off,
+export const clear = () => {
+  loopEvents = {};
+  pausedEvents = {};
+};
 
-    pause,
-    resume,
-  };
-}());
+export const on = (taskName, taskFunction) => {
+  loopEvents[taskName] = taskFunction;
+  pausedEvents[taskName] = false;
+};
 
-export default Loop;
+export const off = (taskName) => {
+  delete loopEvents[taskName];
+  if (pausedEvents[taskName] != null) {
+    delete pausedEvents[taskName];
+  }
+};
+
+export const pause = (taskName) => {
+  pausedEvents[taskName] = true;
+};
+
+export const resume = (taskName) => {
+  if (taskName == null) {
+    isRunning = true;
+    return;
+  }
+
+  pausedEvents[taskName] = false;
+};

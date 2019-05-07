@@ -1,11 +1,14 @@
 import ResizeObserver from 'resize-observer-polyfill';
 
 let context = null;
+let canvasElement;
+
+export const getCanvasElement = () => canvasElement;
 
 export function createContext(width, height) {
   /* eslint no-restricted-syntax: 0 */
 
-  const canvasElement = document.createElement('canvas');
+  canvasElement = document.createElement('canvas');
   canvasElement.setAttribute('width', width);
   canvasElement.setAttribute('height', height);
 
@@ -34,6 +37,12 @@ export function createContext(width, height) {
 
 export const drawImage = ({ x, y }) => (asset) => {
   context.drawImage(asset, x, y);
+};
+
+export const clearRect = ({
+  x, y, w, h,
+}) => () => {
+  context.clearRect(x, y, w, h);
 };
 
 export const drawRect = ({

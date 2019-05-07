@@ -8,6 +8,8 @@
   },
   "rules": {
     "class-methods-use-this": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "import/prefer-default-export": "off",
+    "implicit-arrow-linebreak": "off"
   }
 }

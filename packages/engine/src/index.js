@@ -1,86 +1,73 @@
-import shortid from 'shortid';
-
 import * as CanvasProvider from './CanvasProvider';
+import * as Loop from './Loop';
+import * as ActionConstants from './ActionConstants';
+import * as Assets from './Assets';
+import {
+  populateGlobalStateByBranch,
+  renderGameObjects,
+  updateGameObjects,
+  preloadGameObjects,
+  debugLogState,
+} from './State';
+import * as Dispatcher from './Dispatcher';
 
-export * as Assets from './Assets';
+import Key from './Key';
 
-const gameObjectMap = {};
-const globalState = {};
+export * from './utils';
 
-const defaultGameObjectState = {
-  x: 0,
-  y: 0,
-  z: 0,
-  pivotX: 0,
-  pivotY: 0,
-  angle: 0,
-};
-
-class GameObjectList {
-  constructor(parent) {
-    this.parent = parent;
-  }
-
-  push() {}
-
-  pop() {}
-}
-
-const populateGlobalStateByBranch = (branchName, gameObjects) => {
-  gameObjectMap[branchName] = gameObjects.map(() => shortid.generate());
-
-  gameObjects.forEach((gameObject, index) => {
-    const initialState = gameObject.initialState || {};
-    globalState[gameObjectMap[branchName][index]] = {
-      ...defaultGameObjectState,
-      ...initialState,
-    };
-  });
-};
-const populateGlobalState = (gameObjects) => {
-  populateGlobalStateByBranch('root', gameObjects);
-};
-
-const countChildren = (gameObjects) => {
-  gameObjects.forEach((gameObject) => {
-    // if (Array.isArray(gameObject.children) && gameObject.children.length > 0) {
-    // }
-  });
-};
-
-const dispatch = () => {};
-dispatch.toChildren = () => {};
+export { Assets, ActionConstants, Key };
 
 export default function (width, height, gameObjects) {
   CanvasProvider.createContext(width, height);
-  CanvasProvider.drawRect({
-    x: 0,
-    y: 0,
-    w: width,
-    h: height,
-  })({
-    color: '#fff',
+
+  populateGlobalStateByBranch('root', gameObjects);
+  debugLogState();
+
+  CanvasProvider.getCanvasElement().addEventListener('mousedown', ({ clientX, clientY }) => {
+    Dispatcher.dispatchGlobal({
+      type: ActionConstants.MOUSE_DOWN,
+      x: clientX,
+      y: clientY,
+    });
   });
 
-  populateGlobalState(gameObjects);
-
-  // TODO: Walk through gameobject map rather than passed in game objects
-  gameObjects.forEach((gameObject, index) => {
-    const state = globalState[gameObjectMap.root[index]];
-
-    // TODO: Collect preload functions
-
-    if (gameObject.render) {
-      gameObject.render(state)(CanvasProvider);
-    }
-
-    if (gameObject.update) {
-      gameObject.update(state)();
-    }
-
-    // Detect changes to children and update state and map
+  CanvasProvider.getCanvasElement().addEventListener('mouseup', ({ clientX, clientY }) => {
+    Dispatcher.dispatchGlobal({
+      type: ActionConstants.MOUSE_UP,
+      x: clientX,
+      y: clientY,
+    });
   });
 
-  console.log(gameObjectMap);
-  console.log(globalState);
+  document.addEventListener('keydown', ({ keyCode }) => {
+    Dispatcher.dispatchGlobal({ type: ActionConstants.KEY_DOWN, keyCode });
+  });
+
+  document.addEventListener('keyup', ({ keyCode }) => {
+    Dispatcher.dispatchGlobal({ type: ActionConstants.KEY_DOWN, keyCode });
+  });
+
+  Loop.on('loop', (dt) => {
+    CanvasProvider.clearRect({
+      x: 0,
+      y: 0,
+      w: width,
+      h: height,
+    })();
+    CanvasProvider.drawRect({
+      x: 0,
+      y: 0,
+      w: width,
+      h: height,
+    })({
+      color: '#fff',
+    });
+
+    renderGameObjects('root');
+    updateGameObjects('root', dt, Dispatcher);
+
+    Dispatcher.clear();
+  });
+
+  preloadGameObjects().then(() => Loop.run());
 }
