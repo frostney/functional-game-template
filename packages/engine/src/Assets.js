@@ -11,7 +11,11 @@ export const queue = assets =>
           img.src = source;
 
           img.onload = () => {
-            loadedAssets[assetName] = img;
+            loadedAssets[assetName] = {
+              source: img,
+              width: img.width,
+              height: img.height,
+            };
             resolve(loadedAssets);
           };
 

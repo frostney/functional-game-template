@@ -50,7 +50,7 @@ export default function (width, height, gameObjects) {
   });
 
   document.addEventListener('keyup', ({ keyCode }) => {
-    Dispatcher.dispatchGlobal({ type: ActionConstants.KEY_DOWN, keyCode });
+    Dispatcher.dispatchGlobal({ type: ActionConstants.KEY_UP, keyCode });
   });
 
   Loop.on('loop', dt => {

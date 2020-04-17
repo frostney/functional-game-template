@@ -1,5 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill';
 
+import { resolve } from './Assets';
+
 let context = null;
 let canvasElement;
 
@@ -35,8 +37,37 @@ export function createContext(width, height) {
   context = canvasElement.getContext('2d');
 }
 
-export const drawImage = ({ x, y }) => asset => {
-  context.drawImage(asset, x, y);
+export const drawTexture = ({
+  x,
+  y,
+  width,
+  height,
+  pivotX,
+  pivotY,
+  angle,
+}) => assetName => {
+  const asset = resolve(assetName);
+
+  if (!asset) {
+    return;
+  }
+
+  const w = width || asset.width;
+  const h = height || asset.height;
+  const offsetX = pivotX * w;
+  const offsetY = pivotY * h;
+
+  context.save();
+
+  context.translate(x + offsetX, y + offsetY);
+
+  if (angle !== 0) {
+    context.rotate(angle * (Math.PI / 180));
+  }
+
+  context.drawImage(asset.source, -offsetX, -offsetY);
+
+  context.restore();
 };
 
 export const clearRect = ({ x, y, w, h }) => () => {
