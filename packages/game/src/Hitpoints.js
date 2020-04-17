@@ -13,15 +13,19 @@ export const render = state => graphics => {
   graphics.drawRect({
     x: state.x,
     y: state.y,
-    w: heroAsset.width,
-    h: 5,
+    width: heroAsset.width,
+    height: 5,
+    pivotX: 0.5,
+    pivotY: 0.5,
   })({ color: 'red' });
 
   graphics.drawRect({
     x: state.x,
     y: state.y,
-    w: (state.hitpointsValue / state.hitpointsMax) * heroAsset.width,
-    h: 5,
+    width: (state.hitpointsValue / state.hitpointsMax) * heroAsset.width,
+    height: 5,
+    pivotX: 0.5,
+    pivotY: 0.5,
   })({ color: 'green' });
 };
 
