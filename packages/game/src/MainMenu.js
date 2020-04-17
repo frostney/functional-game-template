@@ -1,1 +1,1 @@
-export const render = state => (graphics) => {};
+export const render = state => graphics => {};

@@ -12,7 +12,7 @@ export function createContext(width, height) {
   canvasElement.setAttribute('width', width);
   canvasElement.setAttribute('height', height);
 
-  const ro = new ResizeObserver((entries) => {
+  const ro = new ResizeObserver(entries => {
     for (const { contentRect } of entries) {
       if (contentRect.width < width) {
         const scale = contentRect.width / width;
@@ -35,19 +35,15 @@ export function createContext(width, height) {
   context = canvasElement.getContext('2d');
 }
 
-export const drawImage = ({ x, y }) => (asset) => {
+export const drawImage = ({ x, y }) => asset => {
   context.drawImage(asset, x, y);
 };
 
-export const clearRect = ({
-  x, y, w, h,
-}) => () => {
+export const clearRect = ({ x, y, w, h }) => () => {
   context.clearRect(x, y, w, h);
 };
 
-export const drawRect = ({
-  x, y, w, h,
-}) => ({ color }) => {
+export const drawRect = ({ x, y, w, h }) => ({ color }) => {
   context.fillStyle = color;
   context.fillRect(x, y, w, h);
 };

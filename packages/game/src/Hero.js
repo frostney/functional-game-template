@@ -15,7 +15,7 @@ export const preload = () => ({
   hero,
 });
 
-export const render = state => (graphics) => {
+export const render = state => graphics => {
   const heroAsset = Assets.resolve('hero');
 
   graphics.drawImage(state)(heroAsset);

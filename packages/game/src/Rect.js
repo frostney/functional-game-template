@@ -5,6 +5,6 @@ export const initialState = {
   h: 100,
 };
 
-export const render = state => (graphics) => {
+export const render = state => graphics => {
   graphics.drawRect(state)({ color: 'yellow' });
 };

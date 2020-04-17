@@ -15,11 +15,11 @@ export const queue = assets =>
             resolve(loadedAssets);
           };
 
-          img.onerror = (err) => {
+          img.onerror = err => {
             reject(err);
           };
-        }),
-    ),
+        })
+    )
   );
 
 export const resolve = assetName => loadedAssets[assetName];
