@@ -28,7 +28,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
-    "husky": "^2.1.0",
+    "husky": "^4.2.5",
     "lerna": "^3.13.4",
     "lint-staged": "^8.1.5",
     "prettier-eslint-cli": "^4.7.1"
