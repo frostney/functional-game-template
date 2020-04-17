@@ -7,7 +7,7 @@ export const initialState = {
   hitpointsValue: 80,
 };
 
-export const render = state => (graphics) => {
+export const render = state => graphics => {
   const heroAsset = Assets.resolve('hero');
 
   graphics.drawRect({

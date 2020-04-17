@@ -5,7 +5,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   devtool:
-    process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'cheap-module-eval-source-map',
+    process.env.NODE_ENV === 'production'
+      ? 'hidden-source-map'
+      : 'cheap-module-eval-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Functional Game Template',

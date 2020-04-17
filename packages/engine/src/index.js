@@ -23,21 +23,27 @@ export default function (width, height, gameObjects) {
   populateGlobalStateByBranch('root', gameObjects);
   debugLogState();
 
-  CanvasProvider.getCanvasElement().addEventListener('mousedown', ({ clientX, clientY }) => {
-    Dispatcher.dispatchGlobal({
-      type: ActionConstants.MOUSE_DOWN,
-      x: clientX,
-      y: clientY,
-    });
-  });
+  CanvasProvider.getCanvasElement().addEventListener(
+    'mousedown',
+    ({ clientX, clientY }) => {
+      Dispatcher.dispatchGlobal({
+        type: ActionConstants.MOUSE_DOWN,
+        x: clientX,
+        y: clientY,
+      });
+    }
+  );
 
-  CanvasProvider.getCanvasElement().addEventListener('mouseup', ({ clientX, clientY }) => {
-    Dispatcher.dispatchGlobal({
-      type: ActionConstants.MOUSE_UP,
-      x: clientX,
-      y: clientY,
-    });
-  });
+  CanvasProvider.getCanvasElement().addEventListener(
+    'mouseup',
+    ({ clientX, clientY }) => {
+      Dispatcher.dispatchGlobal({
+        type: ActionConstants.MOUSE_UP,
+        x: clientX,
+        y: clientY,
+      });
+    }
+  );
 
   document.addEventListener('keydown', ({ keyCode }) => {
     Dispatcher.dispatchGlobal({ type: ActionConstants.KEY_DOWN, keyCode });
@@ -47,7 +53,7 @@ export default function (width, height, gameObjects) {
     Dispatcher.dispatchGlobal({ type: ActionConstants.KEY_DOWN, keyCode });
   });
 
-  Loop.on('loop', (dt) => {
+  Loop.on('loop', dt => {
     CanvasProvider.clearRect({
       x: 0,
       y: 0,
