@@ -21,6 +21,5 @@ jobs:
           yarn install
           yarn lint
           yarn run build
-          yarn test
         env:
           CI: true
