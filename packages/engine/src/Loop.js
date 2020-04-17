@@ -21,16 +21,16 @@ export const run = () => {
       return;
     }
 
-    timers.forEach((timer) => {
+    timers.forEach(timer => {
       timer.tick(now);
     });
 
-    Object.keys(loopEvents).forEach((eventName) => {
+    Object.keys(loopEvents).forEach(eventName => {
       if (!pausedEvents[eventName]) {
         loopEvents[eventName](dt);
       }
     });
-  }());
+  })();
 };
 
 /**
@@ -50,18 +50,18 @@ export const on = (taskName, taskFunction) => {
   pausedEvents[taskName] = false;
 };
 
-export const off = (taskName) => {
+export const off = taskName => {
   delete loopEvents[taskName];
   if (pausedEvents[taskName] != null) {
     delete pausedEvents[taskName];
   }
 };
 
-export const pause = (taskName) => {
+export const pause = taskName => {
   pausedEvents[taskName] = true;
 };
 
-export const resume = (taskName) => {
+export const resume = taskName => {
   if (taskName == null) {
     isRunning = true;
     return;

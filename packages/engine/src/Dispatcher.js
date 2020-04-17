@@ -1,10 +1,10 @@
 let queue = {};
 
-export const dispatchGlobal = (action) => {
+export const dispatchGlobal = action => {
   (queue.root = queue.root || []).push(action);
 };
 
-export const toGameObject = id => (action) => {
+export const toGameObject = id => action => {
   (queue[id] = queue[id] || []).push(action);
 };
 

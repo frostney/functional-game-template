@@ -20,7 +20,9 @@ const defaultGameObjectState = {
 };
 
 const hasChildren = gameObject =>
-  gameObject.children && Array.isArray(gameObject.children) && gameObject.children.length > 0;
+  gameObject.children &&
+  Array.isArray(gameObject.children) &&
+  gameObject.children.length > 0;
 
 export const getChildrenFor = id => globalStateMap[id];
 
@@ -50,7 +52,10 @@ export const populateGlobalStateByBranch = (branchName, gameObjects) => {
     allGameObjects[id] = gameObject;
 
     if (hasChildren(gameObject)) {
-      populateGlobalStateByBranch(globalStateMap[branchName][index], gameObject.children);
+      populateGlobalStateByBranch(
+        globalStateMap[branchName][index],
+        gameObject.children
+      );
     }
   });
 };
@@ -67,11 +72,11 @@ export const preloadGameObjects = () =>
       .map(name => allGameObjects[name])
       .map(({ preload }) => preload)
       .filter(Boolean)
-      .map(preload => Assets.queue(preload())),
+      .map(preload => Assets.queue(preload()))
   );
 
 export const renderGameObjects = (branch, offset = { x: 0, y: 0 }) => {
-  globalStateMap[branch].forEach((id) => {
+  globalStateMap[branch].forEach(id => {
     const gameObject = allGameObjects[id];
     const state = globalState[id];
 
@@ -92,14 +97,16 @@ export const renderGameObjects = (branch, offset = { x: 0, y: 0 }) => {
 };
 
 export const updateGameObjects = (branch, dt, Dispatcher) => {
-  globalStateMap[branch].forEach((id) => {
+  globalStateMap[branch].forEach(id => {
     const gameObject = allGameObjects[id];
     const state = globalState[id];
 
     if (gameObject.update) {
       const dispatch = (...args) => Dispatcher.globalDispatch(...args);
       dispatch.toChildren = action =>
-        getChildrenFor(id).forEach(child => Dispatcher.toGameObject(child)(action));
+        getChildrenFor(id).forEach(child =>
+          Dispatcher.toGameObject(child)(action)
+        );
 
       const updatedGameObject = gameObject.update(state, dispatch);
 
@@ -108,7 +115,7 @@ export const updateGameObjects = (branch, dt, Dispatcher) => {
           ...accumulator,
           ...updatedGameObject(currentValue, dt / 100),
         }),
-        state,
+        state
       );
 
       if (!shallowEqual(state, updatedState)) {
