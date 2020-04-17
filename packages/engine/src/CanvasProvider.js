@@ -37,6 +37,33 @@ export function createContext(width, height) {
   context = canvasElement.getContext('2d');
 }
 
+const drawWithAngle = ({
+  x,
+  y,
+  width,
+  height,
+  pivotX,
+  pivotY,
+  angle,
+}) => callback => {
+  // console.log(pivotX, width);
+
+  const offsetX = pivotX * width;
+  const offsetY = pivotY * height;
+
+  context.save();
+
+  context.translate(x + offsetX, y + offsetY);
+
+  if (angle !== 0) {
+    context.rotate(angle * (Math.PI / 180));
+  }
+
+  callback(offsetX, offsetY);
+
+  context.restore();
+};
+
 export const drawTexture = ({
   x,
   y,
@@ -52,31 +79,38 @@ export const drawTexture = ({
     return;
   }
 
-  const w = width || asset.width;
-  const h = height || asset.height;
-  const offsetX = pivotX * w;
-  const offsetY = pivotY * h;
-
-  context.save();
-
-  context.translate(x + offsetX, y + offsetY);
-
-  if (angle !== 0) {
-    context.rotate(angle * (Math.PI / 180));
-  }
-
-  context.drawImage(asset.source, -offsetX, -offsetY);
-
-  context.restore();
+  drawWithAngle({
+    x,
+    y,
+    width: width || asset.width,
+    height: height || asset.height,
+    pivotX,
+    pivotY,
+    angle,
+  })((offsetX, offsetY) => {
+    context.drawImage(asset.source, -offsetX, -offsetY);
+  });
 };
 
-export const clearRect = ({ x, y, w, h }) => () => {
-  context.clearRect(x, y, w, h);
+export const clearRect = ({ x, y, width, height }) => () => {
+  context.clearRect(x, y, width, height);
 };
 
-export const drawRect = ({ x, y, w, h }) => ({ color }) => {
-  context.fillStyle = color;
-  context.fillRect(x, y, w, h);
+export const drawRect = ({ x, y, width, height, pivotX, pivotY, angle }) => ({
+  color,
+}) => {
+  drawWithAngle({
+    x,
+    y,
+    width,
+    height,
+    pivotX,
+    pivotY,
+    angle,
+  })((offsetX, offsetY) => {
+    context.fillStyle = color;
+    context.fillRect(offsetX, offsetY, width, height);
+  });
 };
 
 export function drawLine() {}

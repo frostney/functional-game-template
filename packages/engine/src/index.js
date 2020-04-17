@@ -57,14 +57,16 @@ export default function (width, height, gameObjects) {
     CanvasProvider.clearRect({
       x: 0,
       y: 0,
-      w: width,
-      h: height,
+      width,
+      height,
     })();
     CanvasProvider.drawRect({
       x: 0,
       y: 0,
-      w: width,
-      h: height,
+      width,
+      height,
+      pivotX: 0.5,
+      pivotY: 0.5,
     })({
       color: '#fff',
     });

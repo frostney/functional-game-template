@@ -1,4 +1,4 @@
-import { Assets, Key } from 'engine';
+import { Key } from 'engine';
 import hero from './hero_front.png';
 
 import * as Hitpoints from './Hitpoints';
