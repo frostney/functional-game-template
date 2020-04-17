@@ -5735,18 +5735,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@^1.2.7#builtin<compat/fsevents>":
-  version: 1.2.12
-  resolution: "fsevents@patch:fsevents@npm%3A1.2.12#builtin<compat/fsevents>::version=1.2.12&hash=77dfe6"
-  dependencies:
-    bindings: ^1.5.0
-    nan: ^2.12.1
-    node-gyp: latest
-    node-pre-gyp: "*"
-  checksum: 2/f873bb718e0a886c4de803c7282f7379035eaef9955d11c133aa06a44e266801b437dd842115c5f304ee321b2c3444d8526f3c92098d6ffb1dfa203f547ffe82
-  languageName: node
-  linkType: hard
-
 "function-bind@npm:^1.1.1":
   version: 1.1.1
   resolution: "function-bind@npm:1.1.1"
@@ -10400,24 +10388,6 @@ resolve@^1.3.2:
   dependencies:
     path-parse: ^1.0.6
   checksum: 2/8e85c1ee368bb0ba13676d2b72ff85e187a3234a4c64d52af14f4aa037619c3561807c82ea811c0e960c287b5d163a675668051a1a52e07dafd72df41847771a
-  languageName: node
-  linkType: hard
-
-"resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#builtin<compat/resolve>":
-  version: 1.16.0
-  resolution: "resolve@patch:resolve@npm%3A1.16.0#builtin<compat/resolve>::version=1.16.0&hash=8fccd0"
-  dependencies:
-    path-parse: ^1.0.6
-  checksum: 2/a564c43272a358451798f53d89700b33ae9425e53450258bb9dd29f6b7c72fc00f143c309bce9032d77121819190410e92d65db07410837668529c6c0aff8281
-  languageName: node
-  linkType: hard
-
-"resolve@patch:resolve@^1.3.2#builtin<compat/resolve>":
-  version: 1.10.1
-  resolution: "resolve@patch:resolve@npm%3A1.10.1#builtin<compat/resolve>::version=1.10.1&hash=8fccd0"
-  dependencies:
-    path-parse: ^1.0.6
-  checksum: 2/f3698408eae770538998e4ed77313f1a068b8669d16f42992ed27605ef61a18e319ba7d5a3fb4a9991df0fba093f6963708bcfb97d40c4ce487cbe6344909799
   languageName: node
   linkType: hard
 
