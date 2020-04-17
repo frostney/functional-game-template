@@ -16,9 +16,7 @@ export const preload = () => ({
 });
 
 export const render = state => graphics => {
-  const heroAsset = Assets.resolve('hero');
-
-  graphics.drawImage(state)(heroAsset);
+  graphics.drawTexture(state)('hero');
 };
 
 export const update = (state, dispatch) => (action = {}, dt) => {

@@ -13,8 +13,8 @@ const defaultGameObjectState = {
   x: 0,
   y: 0,
   z: 0,
-  pivotX: 0,
-  pivotY: 0,
+  pivotX: 0.5,
+  pivotY: 0.5,
   angle: 0,
   visible: true,
 };
